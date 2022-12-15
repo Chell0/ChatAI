@@ -60,10 +60,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text, !text.isEmpty {
+            models.append(text)
             APICaller.shared.getResponse(input: text) {
                 [weak self] result in switch result {
                     case .success(let output): self?.models.append(output); DispatchQueue.main.sync {
                         self?.table.reloadData()
+                        self?.field.text = nil
                     }
                     case .failure: print("Failed")
                 }
