@@ -43,6 +43,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             table.bottomAnchor.constraint(equalTo: field.topAnchor)
         ])
     }
+    
+    // Tableview
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return models.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = models[indexPath.row]
+        cell.textLabel?.numberOfLines = 0
+        return cell
+    }
 
 
 }
