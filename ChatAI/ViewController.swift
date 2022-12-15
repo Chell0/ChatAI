@@ -7,12 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     private let field: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Type here..."
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .red
+        textField.returnKeyType = .done
         return textField
     }()
     
@@ -29,6 +30,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         view.addSubview(field)
         view.addSubview(table)
+        field.delegate = self
         table.delegate = self
         table.dataSource = self
         NSLayoutConstraint.activate([
@@ -55,7 +57,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.textLabel?.numberOfLines = 0
         return cell
     }
-
-
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text, !text.isEmpty {
+            APICaller.shared.getResponse(input: text) {
+                [weak self] result in switch result {
+                    case .success(let output): self?.models.append(output); DispatchQueue.main.sync {
+                        self?.table.reloadData()
+                    }
+                    case .failure: print("Failed")
+                }
+            }
+        }
+        return true
+    }
 }
 
