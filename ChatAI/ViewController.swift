@@ -8,6 +8,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private let field: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Type here..."
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .red
+        return textField
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
