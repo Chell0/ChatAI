@@ -19,7 +19,13 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.addSubview(field)
+        NSLayoutConstraint.activate([
+            field.heightAnchor.constraint(equalToConstant: 50),
+            field.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            field.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            field.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor)
+        ])
     }
 
 
