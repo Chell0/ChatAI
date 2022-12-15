@@ -20,7 +20,7 @@ final class APICaller {
     private init() {}
     
     public func setup() {
-        let client = OpenAISwift(authToken: Constants.key)
+        self.client = OpenAISwift(authToken: Constants.key)
     }
     
     public func getResponse(input: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -29,7 +29,8 @@ final class APICaller {
                 case .success(let model):
                     let output = model.choices.first?.text ?? ""
                     completion(.success(output))
-                case .failure(let error): completion(.failure(error))
+                case .failure(let error):
+                    completion(.failure(error))
             }
         })
     }
